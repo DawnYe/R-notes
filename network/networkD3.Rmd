@@ -1,0 +1,85 @@
+---
+title: "networkD3"
+author: "207统计工作室"
+date: "2017年3月23日"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+本文主要展示如何使用**networkD3**包绘制D3网络图。
+
+## simpleNetwork
+
+直接使用 `simpleNetwork()` 函数即可绘制简单网络图：
+
+
+```{r simpleNetwork, echo=TRUE,highlight=TRUE}
+# Load package
+library(networkD3)
+
+# Create fake data
+src <- c("A", "A", "A", "A",
+        "B", "B", "C", "C", "D")
+target <- c("B", "C", "D", "J",
+            "E", "F", "G", "H", "I")
+networkData <- data.frame(src, target)
+
+# Plot
+simpleNetwork(networkData)
+```
+
+## forceNetwork
+```{r forceNetwork, echo=TRUE,highlight=TRUE}
+# Load data
+data(MisLinks)
+data(MisNodes)
+
+# Plot
+forceNetwork(Links = MisLinks, Nodes = MisNodes,
+            Source = "source", Target = "target",
+            Value = "value", NodeID = "name",
+            Group = "group", opacity = 0.8)
+```
+
+## sankeyNetwork
+```{r sankeyNetwork, echo=TRUE,highlight=TRUE}
+# Load energy projection data
+# Load energy projection data
+URL <- paste0(
+        "https://cdn.rawgit.com/christophergandrud/networkD3/",
+        "master/JSONdata/energy.json")
+Energy <- jsonlite::fromJSON(URL)
+# Plot
+sankeyNetwork(Links = Energy$links, Nodes = Energy$nodes, Source = "source",
+             Target = "target", Value = "value", NodeID = "name",
+             units = "TWh", fontSize = 12, nodeWidth = 30)
+```
+
+## radialNetwork
+```{r radialNetwork, echo=TRUE,highlight=TRUE}
+URL <- paste0(
+        "https://cdn.rawgit.com/christophergandrud/networkD3/",
+        "master/JSONdata//flare.json")
+
+## Convert to list format
+Flare <- jsonlite::fromJSON(URL, simplifyDataFrame = FALSE)
+
+# Use subset of data for more readable diagram
+Flare$children = Flare$children[1:3]
+
+radialNetwork(List = Flare, fontSize = 10, opacity = 0.9)
+```
+
+```{r diagonalNetwork, echo=TRUE,highlight=TRUE}
+diagonalNetwork(List = Flare, fontSize = 10, opacity = 0.9)
+```
+
+## dendroNetwork
+```{r dendroNetwork, echo=TRUE,highlight=TRUE}
+hc <- hclust(dist(USArrests), "ave")
+
+dendroNetwork(hc, height = 600)
+```
+
