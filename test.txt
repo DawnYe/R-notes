@@ -1,1 +1,57 @@
-This is a test.
+---
+title: Pandas 快速入门
+date: 2020-08-25
+tags:
+- "Pandas"
+- Python
+categories:
+- "Python"
+isShowComments: false
+---
+
+<Boxx/>
+
+<!-- more -->
+
+[[toc]]
+
+本节采用下列方式导入`Pandas`与`Numpy`：
+
+```python
+import numpy as np
+import pandas as pd
+```
+
+## 生成对象
+
+用值列表生成 [Series](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series) 时，`Pandas` 默认自动生成整数索引：
+
+```python
+s = pd.Series([1, 3, 5, np.nan, 6, 8])
+s
+```
+
+> **Output:**
+> ```
+> 0    1.0
+> 1    3.0
+> 2    5.0
+> 3    NaN
+> 4    6.0
+> 5    8.0
+> dtype: float64
+> ```
+
+用含日期时间索引与标签的 `NumPy` 数组生成 [DataFrame](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame):
+
+```python
+dates = pd.date_range('2020101', periods=6)
+dates
+```
+
+> **Output:**
+> ```
+> DatetimeIndex(['2020-01-01', '2020-01-02', '2020-01-03', '2020-01-04',
+>                '2020-01-05', '2020-01-06'],
+>               dtype='datetime64[ns]', freq='D')
+> ```
